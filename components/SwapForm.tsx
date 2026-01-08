@@ -1,6 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import axios from 'axios';
+import { maskSignature, maskTransactionId } from '../lib/privacy';
 
 export const SwapForm: FC = () => {
   const { publicKey } = useWallet();
@@ -117,7 +118,7 @@ export const SwapForm: FC = () => {
       {result && (
         <div className="result-message">
           <h3>Swap Initiated!</h3>
-          <p>Transaction ID: {result.transactionId}</p>
+          <p>Transaction ID: {result.transactionId ? maskTransactionId(result.transactionId) : 'N/A'}</p>
           <p>Status: {result.status}</p>
           {result.fees && (
             <div className="fee-details">
@@ -134,8 +135,8 @@ export const SwapForm: FC = () => {
               <p>SOL Received: {result.amounts.solAmount.toFixed(6)} SOL</p>
             </div>
           )}
-          {result.solSignature && <p className="signature">SOL Tx: {result.solSignature.substring(0, 20)}...</p>}
-          {result.bridgeTransactionId && <p>Bridge ID: {result.bridgeTransactionId}</p>}
+          {result.solSignature && <p className="signature">SOL Tx: {maskSignature(result.solSignature)}</p>}
+          {result.bridgeTransactionId && <p>Bridge ID: {maskTransactionId(result.bridgeTransactionId)}</p>}
           {result.estimatedTime && <p>Estimated time: {Math.floor(result.estimatedTime / 60)} minutes</p>}
           <button onClick={handleCheckStatus} className="status-btn">
             Check Status

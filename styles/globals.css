@@ -329,3 +329,28 @@ button {
   font-weight: 500;
   font-size: 0.85rem !important;
 }
+
+/* Wallet button privacy styling */
+.wallet-button-wrapper {
+  position: relative;
+}
+
+.wallet-button-wrapper button {
+  font-family: monospace;
+  letter-spacing: 0.5px;
+}
+
+/* Privacy notice */
+.privacy-notice {
+  background: #f0f8ff;
+  border-left: 4px solid #667eea;
+  padding: 10px 15px;
+  margin: 15px 0;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.privacy-notice strong {
+  color: #667eea;
+}

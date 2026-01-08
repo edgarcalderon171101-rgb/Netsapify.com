@@ -1,6 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import axios from 'axios';
+import { maskBtcAddress, maskSignature, maskTransactionId } from '../lib/privacy';
 
 interface Transaction {
   id: string;
@@ -87,14 +88,14 @@ export const TransactionHistory: FC = () => {
               )}
               <p>SOL: {tx.solAmount.toFixed(6)}</p>
               {tx.btcAmount && <p>BTC: {tx.btcAmount.toFixed(8)}</p>}
-              <p>BTC Address: {tx.btcAddress.substring(0, 20)}...</p>
+              <p>BTC Address: {maskBtcAddress(tx.btcAddress)}</p>
               {tx.solSignature && (
                 <p className="signature">
-                  SOL Tx: {tx.solSignature.substring(0, 20)}...
+                  SOL Tx: {maskSignature(tx.solSignature)}
                 </p>
               )}
               {tx.bridgeTransactionId && (
-                <p>Bridge ID: {tx.bridgeTransactionId}</p>
+                <p>Bridge ID: {maskTransactionId(tx.bridgeTransactionId)}</p>
               )}
               {tx.errorMessage && (
                 <p className="error">Error: {tx.errorMessage}</p>

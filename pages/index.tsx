@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { PrivateWalletButton } from '../components/PrivateWalletButton';
 import { CreditDisplay } from '../components/CreditDisplay';
 import { SwapForm } from '../components/SwapForm';
 import { TransactionHistory } from '../components/TransactionHistory';
@@ -17,7 +17,7 @@ export default function Home() {
         <header className="header">
           <h1>Netsapify</h1>
           <p className="subtitle">Real Solana to BTC Swap & Send</p>
-          <WalletMultiButton />
+          <PrivateWalletButton />
         </header>
 
         <div className="content">
