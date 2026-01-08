@@ -37,7 +37,7 @@ export class BridgeService {
       // Mock response for demonstration
       // Replace this with actual bridge API integration
       const mockResponse: BridgeResponse = {
-        bridgeTransactionId: `bridge_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        bridgeTransactionId: `bridge_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
         status: 'processing',
         estimatedTime: 600, // 10 minutes in seconds
         btcTxId: undefined, // Will be populated once BTC transaction confirms
@@ -72,7 +72,7 @@ export class BridgeService {
         bridgeTransactionId,
         status: 'completed',
         estimatedTime: 0,
-        btcTxId: `btc_${Math.random().toString(36).substr(2, 16)}`,
+        btcTxId: `btc_${Math.random().toString(36).substring(2, 18)}`,
       };
 
       return mockResponse;

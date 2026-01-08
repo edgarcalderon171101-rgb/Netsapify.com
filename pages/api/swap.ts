@@ -62,7 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // Create transaction record
-    const transactionId = `tx_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const transactionId = `tx_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
     const transaction: SwapTransaction = {
       id: transactionId,
       userId: walletAddress,
