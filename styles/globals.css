@@ -260,3 +260,72 @@ button {
   color: #666;
   font-size: 0.9rem;
 }
+
+/* Fee display styles */
+.fee-estimate {
+  background: #fff9e6;
+  border: 2px solid #ffcc00;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.fee-estimate p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.fee-warning {
+  color: #ff6600 !important;
+  font-weight: 600;
+  margin-bottom: 8px !important;
+}
+
+.total-required {
+  margin-top: 10px !important;
+  padding-top: 10px;
+  border-top: 2px solid #ffcc00;
+  color: #333 !important;
+  font-size: 1.05rem !important;
+}
+
+.fee-details {
+  background: #f0f8ff;
+  border-left: 4px solid #667eea;
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+
+.fee-details h4 {
+  color: #667eea;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.fee-details p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.amount-details {
+  background: #f5f5f5;
+  border-left: 4px solid #764ba2;
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+
+.amount-details p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.tx-fees {
+  color: #ff6600 !important;
+  font-weight: 500;
+  font-size: 0.85rem !important;
+}

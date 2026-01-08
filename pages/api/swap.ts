@@ -9,9 +9,9 @@ import {
   validateCreditsAmount,
   validateBtcAddress,
   validateSolanaAddress,
-  calculateSolAmount,
   validateTransactionValue,
 } from '../../lib/validation';
+import { calculateSwapFees, validateCreditsWithFees } from '../../lib/fees';
 import { SwapTransaction } from '../../types';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -40,16 +40,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Check credit balance
     const balance = storage.getCreditBalance(walletAddress);
-    if (!balance || balance.credits < creditsAmount) {
+    if (!balance) {
       return res.status(400).json({ 
-        error: 'Insufficient credits',
-        available: balance?.credits || 0,
+        error: 'No credit balance found',
+        available: 0,
         required: creditsAmount,
       });
     }
 
-    // Calculate SOL amount
-    const solAmount = calculateSolAmount(creditsAmount);
+    // Calculate fees
+    const feeCalculation = calculateSwapFees(creditsAmount);
+    
+    // Validate user has enough credits including fees
+    const creditsValidationWithFees = validateCreditsWithFees(balance.credits, creditsAmount);
+    if (!creditsValidationWithFees.valid) {
+      return res.status(400).json({ 
+        error: creditsValidationWithFees.error,
+        available: balance.credits,
+        required: feeCalculation.totalCreditsRequired,
+        fees: {
+          swapFee: feeCalculation.swapFee,
+          networkFee: feeCalculation.networkFee,
+          totalFees: feeCalculation.totalFees,
+          feePercentage: feeCalculation.feePercentage,
+        },
+      });
+    }
+
+    // Calculate SOL amount (net amount after fees are deducted from credits)
+    const solAmount = feeCalculation.netSolAmount;
 
     // Validate transaction value
     const valueValidation = validateTransactionValue(
@@ -73,12 +92,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       status: 'pending',
       createdAt: new Date(),
       updatedAt: new Date(),
+      // Fee tracking
+      swapFee: feeCalculation.swapFee,
+      networkFee: feeCalculation.networkFee,
+      totalFees: feeCalculation.totalFees,
+      totalCreditsCharged: feeCalculation.totalCreditsRequired,
     };
 
     storage.createTransaction(transaction);
 
-    // Deduct credits
-    storage.updateCredits(walletAddress, -creditsAmount);
+    // Deduct total credits (amount + fees)
+    storage.updateCredits(walletAddress, -feeCalculation.totalCreditsRequired);
 
     // Step 1: Swap credits to SOL (on-chain)
     try {
@@ -119,10 +143,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         bridgeTransactionId: bridgeResponse.bridgeTransactionId,
         estimatedTime: bridgeResponse.estimatedTime,
         message: 'Swap initiated successfully',
+        fees: {
+          swapFee: feeCalculation.swapFee,
+          networkFee: feeCalculation.networkFee,
+          totalFees: feeCalculation.totalFees,
+          feePercentage: feeCalculation.feePercentage,
+        },
+        amounts: {
+          creditsAmount,
+          totalCreditsCharged: feeCalculation.totalCreditsRequired,
+          solAmount,
+        },
       });
     } catch (error) {
-      // Rollback credits on error
-      storage.updateCredits(walletAddress, creditsAmount);
+      // Rollback all credits on error (amount + fees)
+      storage.updateCredits(walletAddress, feeCalculation.totalCreditsRequired);
       storage.updateTransaction(transactionId, {
         status: 'failed',
         errorMessage: error instanceof Error ? error.message : 'Unknown error',

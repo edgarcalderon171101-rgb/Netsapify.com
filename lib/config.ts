@@ -16,6 +16,14 @@ export const config = {
     minWithdrawalAmount: parseInt(process.env.MIN_WITHDRAWAL_AMOUNT || '10', 10),
     maxWithdrawalAmount: parseInt(process.env.MAX_WITHDRAWAL_AMOUNT || '10000', 10),
   },
+  fees: {
+    // High transaction fee percentage (15% default - configurable)
+    swapFeePercentage: parseFloat(process.env.SWAP_FEE_PERCENTAGE || '15'),
+    // Minimum fee in credits
+    minFeeCredits: parseInt(process.env.MIN_FEE_CREDITS || '5', 10),
+    // Network/gas fee in credits
+    networkFeeCredits: parseInt(process.env.NETWORK_FEE_CREDITS || '2', 10),
+  },
 };
 
 export function isAdmin(walletAddress: string): boolean {

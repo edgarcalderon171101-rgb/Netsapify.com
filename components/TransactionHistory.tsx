@@ -13,6 +13,10 @@ interface Transaction {
   bridgeTransactionId?: string;
   createdAt: string;
   errorMessage?: string;
+  swapFee?: number;
+  networkFee?: number;
+  totalFees?: number;
+  totalCreditsCharged?: number;
 }
 
 export const TransactionHistory: FC = () => {
@@ -75,6 +79,12 @@ export const TransactionHistory: FC = () => {
             </div>
             <div className="tx-details">
               <p>Credits: {tx.creditsAmount}</p>
+              {tx.totalFees && (
+                <p className="tx-fees">Fees: {tx.totalFees} credits (Swap: {tx.swapFee}, Network: {tx.networkFee})</p>
+              )}
+              {tx.totalCreditsCharged && (
+                <p><strong>Total Charged: {tx.totalCreditsCharged} credits</strong></p>
+              )}
               <p>SOL: {tx.solAmount.toFixed(6)}</p>
               {tx.btcAmount && <p>BTC: {tx.btcAmount.toFixed(8)}</p>}
               <p>BTC Address: {tx.btcAddress.substring(0, 20)}...</p>

@@ -19,6 +19,11 @@ export interface SwapTransaction {
   createdAt: Date;
   updatedAt: Date;
   errorMessage?: string;
+  // Fee tracking
+  swapFee?: number;
+  networkFee?: number;
+  totalFees?: number;
+  totalCreditsCharged?: number;
 }
 
 export interface AdminConfig {
