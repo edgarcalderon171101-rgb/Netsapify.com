@@ -1,0 +1,262 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #333;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: #667eea;
+  margin: 0;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.main-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.credit-display,
+.swap-form,
+.transaction-history {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.credit-display h3,
+.swap-form h2,
+.transaction-history h3 {
+  color: #667eea;
+  margin-bottom: 15px;
+}
+
+.balance {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #764ba2;
+  margin: 15px 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.refresh-btn,
+.status-btn {
+  background: #f0f0f0;
+  color: #667eea;
+  margin-top: 10px;
+}
+
+.refresh-btn:hover,
+.status-btn:hover {
+  background: #e0e0e0;
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border-left: 4px solid #c33;
+}
+
+.result-message {
+  background: #efe;
+  color: #363;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #363;
+}
+
+.result-message h3 {
+  color: #363;
+  margin-bottom: 10px;
+}
+
+.result-message p {
+  margin: 5px 0;
+  word-break: break-all;
+  font-size: 0.9rem;
+}
+
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.transaction-item {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 15px;
+  border-left: 4px solid #667eea;
+}
+
+.tx-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-pending {
+  background: #fff4e6;
+  color: #e67700;
+}
+
+.status-credits_to_sol,
+.status-sol_to_btc {
+  background: #e6f7ff;
+  color: #0066cc;
+}
+
+.status-completed {
+  background: #e6ffe6;
+  color: #006600;
+}
+
+.status-failed {
+  background: #ffe6e6;
+  color: #cc0000;
+}
+
+.date {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.tx-details p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.signature {
+  font-family: monospace;
+  font-size: 0.85rem;
+}
+
+.footer {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.footer p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
