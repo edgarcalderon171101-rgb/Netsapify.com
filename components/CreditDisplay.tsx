@@ -19,6 +19,7 @@ export const CreditDisplay: FC = () => {
     } else {
       setBalance(null);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey]);
 
   const fetchBalance = async () => {

@@ -26,6 +26,7 @@ export const TransactionHistory: FC = () => {
     } else {
       setTransactions([]);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey]);
 
   const fetchTransactions = async () => {

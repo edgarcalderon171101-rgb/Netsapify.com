@@ -7,7 +7,13 @@ export const SwapForm: FC = () => {
   const [creditsAmount, setCreditsAmount] = useState('');
   const [btcAddress, setBtcAddress] = useState('');
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<{
+    transactionId?: string;
+    status?: string;
+    solSignature?: string;
+    bridgeTransactionId?: string;
+    estimatedTime?: number;
+  } | null>(null);
   const [error, setError] = useState('');
 
   const handleSwap = async (e: React.FormEvent) => {
@@ -32,8 +38,9 @@ export const SwapForm: FC = () => {
       setResult(response.data);
       setCreditsAmount('');
       setBtcAddress('');
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to process swap');
+    } catch (err) {
+      const error = err as { response?: { data?: { error?: string } } };
+      setError(error.response?.data?.error || 'Failed to process swap');
     } finally {
       setLoading(false);
     }
@@ -44,7 +51,7 @@ export const SwapForm: FC = () => {
 
     try {
       const response = await axios.get(`/api/status?transactionId=${result.transactionId}`);
-      setResult((prev: any) => ({ ...prev, ...response.data }));
+      setResult((prev) => prev ? { ...prev, ...response.data } : response.data);
     } catch (err) {
       console.error('Error checking status:', err);
     }
