@@ -8,10 +8,26 @@ A complete, production-ready Solana to Bitcoin swap and send system that:
 - ✅ Sends wallet → wallet
 - ✅ Admin-only controls for credits and withdrawal amounts
 - ✅ Transaction validation by value and amount
+- ✅ **High transaction fees (15% + network fees) charged in credits**
 - ✅ Works on Netlify AND Vercel
 - ✅ Extensible for future upgrades (staking, rewards, fees)
 
 No gimmicks. No fake liquidity logic. Real execution.
+
+## 💰 Fee Structure
+
+### High Transaction Fees
+- **15% swap fee** on all transactions (configurable)
+- **Minimum 5 credits** fee floor
+- **2 credits network/gas** fee per transaction
+- **Fees deducted from credits before swap**
+- Total fees displayed upfront to users
+
+**Example:**
+- Swap 100 credits → Fees: 15 (swap) + 2 (network) = **17 credits**
+- Total required: **117 credits**
+- You receive: SOL equivalent of 100 credits
+- Admin keeps: 17 credits as fees
 
 ## 🚀 Quick Start
 
@@ -42,6 +58,11 @@ BRIDGE_API_URL=https://api.bridge-provider.com
 CREDIT_TO_SOL_RATE=0.001
 MIN_WITHDRAWAL_AMOUNT=10
 MAX_WITHDRAWAL_AMOUNT=10000
+
+# Fee Configuration (High transaction fees)
+SWAP_FEE_PERCENTAGE=15
+MIN_FEE_CREDITS=5
+NETWORK_FEE_CREDITS=2
 ```
 
 ### 3. Run Development Server
